@@ -1,2 +1,2 @@
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/device_q710.mk
+    $(LOCAL_DIR)/omni_q710.mk
