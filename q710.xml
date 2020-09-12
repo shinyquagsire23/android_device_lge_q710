@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <project path="device/lge/q710" remote="github" name="shinyquagsire23/android_device_lge_q710" revision="lineage-17.1" />
+  <project path="kernel/lge/q710" remote="github" name="shinyquagsire23/android_kernel_lge_q710" revision="lineage-17.1" />
+</manifest>
