@@ -17,7 +17,7 @@
 DEVICE_PATH := device/lge/q710
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := q710
+#TARGET_OTA_ASSERT_DEVICE := q710 # we don't want any OTA assertions for now
 
 # Architecture
 #TARGET_BOARD_SUFFIX := _64
@@ -34,10 +34,14 @@ TARGET_OTA_ASSERT_DEVICE := q710
 #TARGET_2ND_CPU_ABI2 := armeabi
 #TARGET_2ND_CPU_VARIANT := cortex-a53
 
+TARGET_PREFER_32_BIT_APPS := true
+TARGET_SUPPORTS_32_BIT_APPS := true
+TARGET_SUPPORTS_64_BIT_APPS := false
+
 TARGET_BOARD_SUFFIX := _32
 
 TARGET_ARCH := arm
-TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a53
@@ -45,17 +49,14 @@ TARGET_CPU_VARIANT := cortex-a53
 TARGET_BOARD_PLATFORM := msm8953
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno506
 
-TARGET_BOARD_SUFFIX := _64
-TARGET_USES_64_BIT_BINDER := true
-
 # Build
 BUILD_BROKEN_DUP_RULES := true
 
 # Kernel
 BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 lge.uart=enable earlycon=msm_hsl_uart,0x78af000 user_debug=30 msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7 androidboot.usbconfigfs=false androidboot.hardware=cv7a
+BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 lge.uart=enable earlycon=msm_hsl_uart,0x78af000 keep_bootcon user_debug=30 msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7 androidboot.usbconfigfs=false androidboot.hardware=cv7a
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+BOARD_KERNEL_IMAGE_NAME := zImage-dtb
 BOARD_KERNEL_PAGESIZE :=  2048
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x2000000 --tags_offset 0x1E00000
 TARGET_KERNEL_SOURCE := kernel/lge/q710
@@ -108,17 +109,17 @@ QCOM_BT_USE_BTNV := true
 TARGET_USE_QTI_BT_STACK := true
 
 # Camera
-USE_DEVICE_SPECIFIC_CAMERA := true
+USE_DEVICE_SPECIFIC_CAMERA := false
 BOARD_QTI_CAMERA_32BIT_ONLY := true
 TARGET_TS_MAKEUP := true
-TARGET_USES_QTI_CAMERA_DEVICE := true
+TARGET_USES_QTI_CAMERA_DEVICE := false
 
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 
 # CNE / DPM
-BOARD_USES_QCNE := true
+BOARD_USES_QCNE := false
 
 # Cpusets
 ENABLE_CPUSETS := true
@@ -154,7 +155,7 @@ USE_OPENGL_RENDERER := true
 TARGET_ENABLE_MEDIADRM := true
 
 # Filesystem
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+#BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -164,7 +165,7 @@ TARGET_COPY_OUT_VENDOR := vendor
 BOARD_HAVE_QCOM_FM := true
 
 # GPS
-USE_DEVICE_SPECIFIC_GPS := true
+USE_DEVICE_SPECIFIC_GPS := false
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := default
 LOC_HIDL_VERSION := 3.0
 
@@ -177,21 +178,22 @@ DEVICE_MATRIX_FILE   := $(DEVICE_PATH)/compatibility_matrix.xml
 DEVICE_FRAMEWORK_MANIFEST_FILE := $(DEVICE_PATH)/framework_manifest.xml
 
 # Keymaster
-TARGET_PROVIDES_KEYMASTER := true
+TARGET_PROVIDES_KEYMASTER := false #todo
+TARGET_KEYMASTER_WAIT_FOR_QSEE := false
 
 # Media
 TARGET_USES_MEDIA_EXTENSIONS := true
 
 # Partitions
-BOARD_BOOTIMAGE_PARTITION_SIZE := 0x2000000
-BOARD_CACHEIMAGE_PARTITION_SIZE := 0x10000000
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x2000000
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 0xc0000000
-BOARD_PERSISTIMAGE_PARTITION_SIZE := 0x2000000
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 0xC0000000
-BOARD_VENDORIMAGE_PARTITION_SIZE := 0x20000000
+BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432 #0x2000000
+#BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456 #0x10000000
+#BOARD_RECOVERYIMAGE_PARTITION_SIZE := 33554432 #0x2000000
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3221225472 #0xc0000000
+BOARD_PERSISTIMAGE_PARTITION_SIZE := 33554432 #0x2000000
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 3221225472 #0xC0000000
+BOARD_VENDORIMAGE_PARTITION_SIZE := 536870912 #0x20000000
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_FLASH_BLOCK_SIZE := 0x40000
+BOARD_FLASH_BLOCK_SIZE := 262144 #0x40000
 BOARD_ROOT_EXTRA_SYMLINKS := \
     /vendor/dsp:/dsp \
     /vendor/firmware_mnt:/firmware \
@@ -202,7 +204,7 @@ BOARD_ROOT_EXTRA_SYMLINKS := \
 TARGET_PER_MGR_ENABLED := true
 
 # Power
-TARGET_TAP_TO_WAKE_NODE := "/proc/gesture/onoff"
+#TARGET_TAP_TO_WAKE_NODE := "/proc/gesture/onoff"
 TARGET_USES_INTERACTION_BOOST := true
 
 # Properties
@@ -219,11 +221,7 @@ ENABLE_VENDOR_RIL_SERVICE := true
 TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 
 # Recovery
-ifeq ($(AB_OTA_UPDATER), true)
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/fstab_AB.qcom
-else
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/fstab.qcom
-endif
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/fstab.cv7a
 
 # Security Patch Level
 VENDOR_SECURITY_PATCH := 2020-08-01
@@ -234,8 +232,8 @@ BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
 
 # Shims
-TARGET_LD_SHIM_LIBS := \
-    /vendor/lib/hw/camera.msm8953.so|libshims_camera.so
+#TARGET_LD_SHIM_LIBS := \
+#    /vendor/lib/hw/camera.msm8953.so|libshims_camera.so
 
 # Treble
 PRODUCT_FULL_TREBLE_OVERRIDE := true

@@ -1,4 +1,8 @@
+soong_namespace {
+    imports: ["hardware/qcom/bootctrl"],
+}
+
 subdirs = [
     "fingerprint",
-    "light",
+    "light"
 ]

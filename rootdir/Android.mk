@@ -3,14 +3,10 @@ LOCAL_PATH := $(call my-dir)
 # Init scripts
 
 include $(CLEAR_VARS)
-LOCAL_MODULE       := fstab.qcom
+LOCAL_MODULE       := fstab.cv7a
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
-ifeq ($(AB_OTA_UPDATER), true)
-LOCAL_SRC_FILES    := fstab_AB.qcom
-else
-LOCAL_SRC_FILES    := fstab.qcom
-endif
+LOCAL_SRC_FILES    := fstab.cv7a
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)
 include $(BUILD_PREBUILT)
 
@@ -73,10 +69,10 @@ LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE       := init.q710.rc
+LOCAL_MODULE       := init.cv7a.rc
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := init.q710.rc
+LOCAL_SRC_FILES    := init.cv7a.rc
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_ETC)/init
 include $(BUILD_PREBUILT)
 
@@ -103,14 +99,6 @@ LOCAL_MODULE       := init.qcom.post_boot.sh
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES    := etc/init.qcom.post_boot.sh
-LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE       := init.goodix.sh
-LOCAL_MODULE_TAGS  := optional
-LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := etc/init.goodix.sh
 LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
 include $(BUILD_PREBUILT)
 
